@@ -198,7 +198,7 @@ function openPuzzle(id) {
 function renderChoices() { const keep = Q("#nar").textContent; const sc = curScene(); Q("#ch").querySelectorAll(".choice").forEach(() => {}); const t = Q("#nar").textContent; render(); Q("#nar").textContent = keep || t; }
 
 /* ---------- kitten ---------- */
-function kit(st) { const k = Q("#kit"); k.classList.remove("hop", "happy"); void k.offsetWidth; k.classList.add(st); setTimeout(() => k.classList.remove(st), 900); wake(); }
+function kit(st) { const k = Q("#kit"); k.classList.remove("hop", "happy", "lick", "attention", "wander", "stretch", "twitch", "look"); void k.offsetWidth; k.classList.add(st); setTimeout(() => k.classList.remove(st), st === "wander" ? 2800 : 1200); wake(); }
 function wake() { const k = Q("#kit"); k.classList.remove("sleep"); clearTimeout(idle); idle = setTimeout(() => k.classList.add("sleep"), curScene() && curWorld().kind === "library" ? 12000 : 22000); }
 function bubble(t, ms = 9000) { const b = Q("#kb"); b.textContent = T(t); b.classList.add("on"); clearTimeout(kbT); kbT = setTimeout(() => b.classList.remove("on"), ms); }
 
@@ -212,8 +212,8 @@ const LN = {
 };
 function react(kind, p) { if (Math.random() > p) return; kit("happy"); bubble(pick(LN[kind]), 6000); }
 function enter() { if (!S.started) return; S.visited = S.visited || {}; if (S.visited[S.scene]) return; S.visited[S.scene] = 1; save(); const k = curWorld().kind; setTimeout(() => bubble("Mrrp. " + (LN.enter[k] || "New place. Sniffing it."), 6500), 1500); }
-function walkIn() { if (reduce) return; const k = Q("#kit"); k.classList.remove("walk"); void k.offsetWidth; k.classList.add("walk"); setTimeout(() => k.classList.remove("walk"), 1300); }
-(function fidget() { setTimeout(() => { const k = Q("#kit"); if (!document.hidden && !reduce) { if (!k.classList.contains("sleep")) { const m = pick(["stretch", "twitch", "look"]); k.classList.add(m); setTimeout(() => k.classList.remove(m), 1300); } else if (Math.random() < .4) bubble("zzz... (mrrp?)", 3000); } fidget(); }, 7000 + Math.random() * 7000); })();
+function walkIn() { if (reduce) return; const k = Q("#kit"); k.classList.remove("walk"); void k.offsetWidth; k.classList.add("walk"); setTimeout(() => k.classList.remove("walk"), 2800); }
+(function fidget() { setTimeout(() => { const k = Q("#kit"); if (!document.hidden && !reduce) { if (!k.classList.contains("sleep")) { const m = pick(["stretch", "twitch", "look", "lick", "attention", "wander"]); k.classList.remove("stretch", "twitch", "look", "lick", "attention", "wander"); void k.offsetWidth; k.classList.add(m); setTimeout(() => k.classList.remove(m), m === "wander" ? 2800 : 1200); if (m === "attention" && Math.random() < .65) bubble("Mrrp? I am available for admiration.", 3500); } else if (Math.random() < .4) bubble("zzz... (mrrp?)", 3000); } fidget(); }, 6500 + Math.random() * 9000); })();
 function hint() {
   const now = Date.now(); kc = now - kt < 1500 ? kc + 1 : 1; kt = now; if (kc >= 6) { kc = 0; kit("happy"); bubble("I am a professional. Please stop. ...Slightly to the left.", 5000); return; }
   const sc = curScene(), objs = (sc.objects || []).filter(o => ok(o.showIf)), pool = ST.kitten && (ST.kitten[sc.world] || ST.kitten._) || ["Mrrp."], pre = pool[(Math.random() * pool.length) | 0]; let line;

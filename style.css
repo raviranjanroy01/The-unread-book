@@ -47,16 +47,18 @@ button{font:inherit;color:inherit;cursor:pointer}
 .tl{transform-box:fill-box;transform-origin:0 100%;animation:sway 3s infinite}
 .peek{animation:peek 12s infinite ease-in-out}
 /* kitten */
-#kit{position:absolute;right:10px;bottom:6px;width:84px;height:84px;background:none;border:0;padding:0;z-index:4}
+#kit{position:absolute;right:8px;bottom:2px;width:104px;height:104px;background:none;border:0;padding:0;z-index:4;filter:drop-shadow(0 7px 5px #38284242)}
 #kit svg{width:100%;height:100%;overflow:visible}
-#kit .tail{transform-box:fill-box;transform-origin:0 100%;animation:sway 2.4s infinite ease-in-out}
-#kit .bd{transform-box:fill-box;transform-origin:50% 100%;animation:breathe 3.4s infinite ease-in-out}
+#kit .tail{transform-box:fill-box;transform-origin:20% 92%;animation:kitty-tail 2.7s infinite ease-in-out}
+#kit .kitty-body{transform-box:fill-box;transform-origin:50% 100%;animation:kitty-breathe 3.2s infinite ease-in-out}
+#kit .kitty-head{transform-box:fill-box;transform-origin:50% 80%;animation:kitty-head 4.5s infinite ease-in-out}
 #kit .eye{transform-box:fill-box;transform-origin:center;animation:blink 5s infinite}
 #kit .pu{transform:translate(var(--px,0),var(--py,0));transition:transform .2s}
-#kit.sleep .eye{transform:scaleY(.12);animation:none}
-#kit.sleep .tail{animation-duration:6s}
+#kit .lick-paw,#kit .tongue,#kit .heart-pop,#kit .zzz{opacity:0;transform-box:fill-box;transform-origin:center}
+#kit .heart-pop{transform:translate(80px,20px) scale(.2)}#kit .zzz{fill:#fff7ec;stroke:#684662;stroke-width:.7;font:bold 17px Georgia,serif}
+#kit.sleep{transform:rotate(-8deg) translateY(5px)}#kit.sleep .eye{transform:scaleY(.12);animation:none}#kit.sleep .tail{animation:kitty-tail-sleep 5s infinite ease-in-out}#kit.sleep .zzz{opacity:1;animation:zzz 2.4s infinite ease-in-out}
 #kit.hop{animation:hop .6s}
-#kit.happy .tail{animation-duration:.35s}
+#kit.happy .tail{animation-duration:.35s}#kit.happy .kitty-head{animation:kitty-happy .5s 2 ease-in-out}
 #kb{position:absolute;right:98px;bottom:18px;max-width:min(300px,62vw);background:#fff;border:2px solid var(--rose);border-radius:16px 16px 4px 16px;padding:9px 13px;font-size:.92rem;line-height:1.4;z-index:4;opacity:0;transform:translateY(8px);pointer-events:none;transition:.3s;box-shadow:0 6px 20px #0003}
 #kb.on{opacity:1;transform:none}
 /* modal */
@@ -78,12 +80,24 @@ button{font:inherit;color:inherit;cursor:pointer}
 #kit.twitch .ear{animation:twitch .3s 3}
 #kit.stretch svg{animation:stretch 1.2s}
 #kit.look .pu{transform:translate(-3px,-1px)}
-#kit.walk{animation:walk 1.1s ease-out}
+#kit.walk,#kit.wander{animation:walk 2.7s ease-in-out}
+#kit.lick .lick-paw{opacity:1;animation:lickpaw .65s 3 ease-in-out}.lick .tongue{opacity:1;animation:licktongue .65s 3 ease-in-out}.lick .paw-l{opacity:.15}
+#kit.attention .paw-l{transform-box:fill-box;transform-origin:70% 90%;animation:wave .48s 4 ease-in-out}.attention .heart-pop{opacity:1;animation:heartpop 1.2s ease-out}.attention .kitty-head{animation:kitty-happy .45s 3 ease-in-out}
 #kit[data-w=pond] .tail{animation-duration:.9s}
 #kit[data-w=observatory] .eye{transform:scale(1.12)}
+@keyframes kitty-tail{50%{transform:rotate(15deg)}0%,100%{transform:rotate(-8deg)}}
+@keyframes kitty-tail-sleep{50%{transform:rotate(4deg)}0%,100%{transform:rotate(-2deg)}}
+@keyframes kitty-breathe{50%{transform:scaleY(1.045) scaleX(.98)}}
+@keyframes kitty-head{50%{transform:rotate(2deg) translateY(-1px)}}
+@keyframes kitty-happy{50%{transform:translateY(-4px) rotate(-4deg)}}
 @keyframes twitch{50%{transform:rotate(-9deg)}}
 @keyframes stretch{40%,60%{transform:scale(1.15,.85) translateY(6px)}}
-@keyframes walk{from{transform:translateX(170px)}60%{transform:translateX(30px) translateY(-6px)}}
+@keyframes walk{0%{transform:translateX(90px)}35%{transform:translateX(-12px) translateY(-5px)}68%{transform:translateX(35px) translateY(-2px)}100%{transform:translateX(0)}}
+@keyframes lickpaw{50%{transform:translate(12px,-23px) rotate(-12deg)}}
+@keyframes licktongue{50%{transform:translate(-8px,5px) scaleY(1.4)}}
+@keyframes wave{50%{transform:translate(-2px,-20px) rotate(-26deg)}}
+@keyframes heartpop{0%{transform:translate(80px,20px) scale(.2)}55%{opacity:1;transform:translate(80px,-8px) scale(1)}100%{opacity:0;transform:translate(80px,-24px) scale(.7)}}
+@keyframes zzz{50%{transform:translate(-8px,-12px);opacity:1}100%{transform:translate(-14px,-23px);opacity:0}}
 @keyframes halo{50%{opacity:.34;transform:scale(1.12)}}
 @keyframes tw{50%{opacity:.25}}
 @keyframes sway{50%{transform:rotate(4deg)}0%,100%{transform:rotate(-4deg)}}
