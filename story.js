@@ -45,8 +45,20 @@ scenes: {
   ],
   choices: [
    { text: "Follow the moss path up to a floating library", go: "library", need: ["moon_word"], locked: "The path is still just moss. The stone wants a word first." },
-   { text: "Slip toward the sound of water instead", go: "pond", set: ["took_pond"] }
+   { text: "Slip toward the sound of water instead", go: "pond", set: ["took_pond"] },
+   { text: "Visit the moonlit Quiz Corner", go: "quiz" }
   ] },
+ quiz: { world: "library", title: "The Moonlit Quiz Corner",
+  text: "A tiny arcade has unfolded between the shelves. Five glowing buttons wait: two hum original instrumental clues, and three test your Free Fire MAX knowledge.",
+  kitten: "Tap a glowing button. The music clues are original little tunes, so there is no need to know a commercial song.",
+  objects: [
+   { id: "song1", label: "silver music box", kind: "star", x: 220, y: 280, color: "#c9a7ff", puzzle: "p_song_moon", say: "The music box plays a bright, original refrain." },
+   { id: "song2", label: "golden music box", kind: "lantern", x: 780, y: 290, color: "#ffd48a", puzzle: "p_song_sun", say: "The music box plays a warm, original refrain." },
+   { id: "ff1", label: "Firelink console", kind: "telescope", x: 350, y: 500, color: "#8fd5f0", puzzle: "p_ff_firelink", say: "The console flashes: CONNECTION COMPLETE." },
+   { id: "ff2", label: "MAX display", kind: "book", x: 560, y: 500, color: "#ff9ec4", puzzle: "p_ff_visuals", say: "The display blooms into sharp, glittering color." },
+   { id: "ff3", label: "BOOYAH beacon", kind: "star", x: 710, y: 490, color: "#8de0b6", puzzle: "p_ff_goal", say: "The beacon cheers: BOOYAH!" }
+  ],
+  choices: [ { text: "Return to the Moonflower Garden", go: "garden" } ] },
  library: { world: "library", title: "The Floating Library",
   text: "Shelves drift like slow boats. Books flap past, complaining about the draft. Somewhere a page is turning itself, and somewhere else a bookmark is pointing at something that is not there.",
   objects: [
@@ -144,7 +156,12 @@ puzzles: {
  p_stars: { type: "sequence", prompt: "Connect the constellations in the right order.", options: ["The Fish", "The Cat", "The Crown"], answers: ["The Cat", "The Crown", "The Fish"], needs: ["scope_note"],
   locked: "The map is blank. Maybe the telescope has something to show you.",
   hints: ["Purrr. The telescope has the order written on its tube.", "The Cat goes first, naturally. Cats always go first."],
-  wrong: "The stars scatter and start again. Rude, but fair.", win: "The stars slide into a line and glow.", reward: ["stars_aligned"] }
+  wrong: "The stars scatter and start again. Rude, but fair.", win: "The stars slide into a line and glow.", reward: ["stars_aligned"] },
+ p_song_moon: { type: "audiochoice", prompt: "Listen to this original instrumental clue. Which made-up song title fits it?", audio: "523:0.22,659:0.22,784:0.34,659:0.22,523:0.34", options: ["Moonlight Steps", "Thunder Parade", "Midday Traffic"], answers: ["Moonlight Steps"], hints: ["Mrrp. The title is about the thing glowing over the garden.", "It is not thunder or traffic. Look up at night."], wrong: "The music box gives a tiny disappointed ping.", win: "The music box twinkles: Moonlight Steps it is!", reward: ["song_moon"] },
+ p_song_sun: { type: "audiochoice", prompt: "Listen to this original instrumental clue. Which made-up song title fits it?", audio: "392:0.2,440:0.2,523:0.2,659:0.36,523:0.2,440:0.3", options: ["Sunrise Sprint", "Midnight Sleep", "Rainy Basement"], answers: ["Sunrise Sprint"], hints: ["Mew. Think of the start of a bright day.", "The melody climbs like the morning sun."], wrong: "The golden box hums: try listening once more.", win: "The golden box shines: Sunrise Sprint!", reward: ["song_sun"] },
+ p_ff_firelink: { type: "choice", prompt: "Free Fire MAX uses which technology to let players enjoy game modes with Free Fire players?", options: ["Firelink", "Skybridge", "BooyahNet"], answers: ["Firelink"], hints: ["The name has fire in it.", "Garena calls it exclusive Firelink technology."], wrong: "The console says: connection not found.", win: "Correct — Firelink connects the experience.", reward: ["ff_firelink"] },
+ p_ff_visuals: { type: "choice", prompt: "Which is highlighted as part of Free Fire MAX's premium visual experience?", options: ["Ultra HD resolutions and effects", "Black-and-white graphics", "No visual changes"], answers: ["Ultra HD resolutions and effects"], hints: ["MAX is built for a more premium visual experience.", "Think sharper resolution and impressive effects."], wrong: "The display fuzzes briefly. Try again.", win: "Correct — the display sharpens brilliantly.", reward: ["ff_visuals"] },
+ p_ff_goal: { type: "choice", prompt: "In Free Fire's Battle Royale, what is the ultimate goal?", options: ["Be the last one standing", "Collect every map", "Never leave the lobby"], answers: ["Be the last one standing"], hints: ["Ambush, survive, and outlast the competition.", "One player or squad remains at the end."], wrong: "The beacon blinks: keep fighting.", win: "BOOYAH! Be the last one standing.", reward: ["ff_booyah"] }
 }
 };
 function loadStory() { try { const s = JSON.parse(localStorage.getItem("ub_story")); if (s && s.scenes && s.worlds) return s; } catch (e) {} return JSON.parse(JSON.stringify(window.DEFAULT_STORY)); }

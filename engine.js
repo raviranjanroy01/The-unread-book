@@ -143,6 +143,19 @@ function card(html, after) {
 const closeCard = () => { Q("#modal").hidden = true; Q("#modal").innerHTML = ""; };
 addEventListener("keydown", e => { if (e.key === "Escape") closeCard(); });
 
+// Original instrumental clues stored as note:duration pairs. No commercial audio is bundled.
+function playTune(notes) {
+  if (!notes) return;
+  try {
+    const c = ac(); let at = c.currentTime + .04;
+    String(notes).split(",").forEach(part => {
+      const [note, length] = part.trim().split(":"), freq = +note, dur = Math.max(.08, +length || .22);
+      if (freq > 0) { const o = c.createOscillator(), g = c.createGain(); o.type = "triangle"; o.frequency.value = freq; g.gain.setValueAtTime(.0001, at); g.gain.exponentialRampToValueAtTime(.09, at + .025); g.gain.exponentialRampToValueAtTime(.0001, at + dur - .02); o.connect(g); g.connect(c.destination); o.start(at); o.stop(at + dur); }
+      at += dur + .03;
+    });
+  } catch (e) {}
+}
+
 function openPuzzle(id) {
   const p = ST.puzzles[id]; if (!p) return;
   if (!ok(p.needs)) { say(p.locked || "Something is still missing. Explore a little more."); return; }
@@ -152,7 +165,10 @@ function openPuzzle(id) {
   const fail = () => { msg.textContent = T(p.wrong || "Not quite. Try again.") + (Math.random() < .4 ? "  Kitten says: " + pick(LN.wrong) : ""); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); kit("hop"); };
   const win = () => { S.solved[id] = 1; grant(p.reward); save(); closeCard(); chime(2); kit("happy"); say(p.win || "Solved."); react("solve", 1); render2(); if (p.go) setTimeout(() => goTo(p.go, {}), 900); };
   const render2 = () => { Q("#nar").textContent = Q("#nar").textContent; renderChoices(); };
-  if (p.type === "choice") { csv(p.options).forEach(o => { const b = el("button", "pick"); b.textContent = o; b.style.margin = "4px"; b.onclick = () => (norm(o) === norm(ans[0]) ? win() : fail()); body.append(b); }); }
+  if (p.type === "choice" || p.type === "audiochoice") {
+    if (p.type === "audiochoice") { const listen = el("button", "pri", "▶ Play instrumental clue"); listen.onclick = () => playTune(p.audio); body.append(listen); }
+    csv(p.options).forEach(o => { const b = el("button", "pick"); b.textContent = o; b.style.margin = "4px"; b.onclick = () => (norm(o) === norm(ans[0]) ? win() : fail()); body.append(b); });
+  }
   else if (p.type === "sequence") { const picks = []; const out = el("p"); out.textContent = "Order so far: (none)"; body.append(out);
     csv(p.options).forEach(o => { const b = el("button", "pick"); b.textContent = o; b.style.margin = "4px"; b.onclick = () => { picks.push(o); b.disabled = true; out.textContent = "Order so far: " + picks.join(", "); if (picks.length === ans.length) { if (picks.every((x, i) => norm(x) === norm(ans[i]))) win(); else { fail(); picks.length = 0; body.querySelectorAll("button").forEach(x => x.disabled = false); out.textContent = "Order so far: (none)"; } } }; body.append(b); }); }
   else { const i = el("input"); i.setAttribute("aria-label", "Your answer"); i.autocomplete = "off"; const b = el("button", "pri", "Try it"); const go = () => (ans.some(a => norm(a) === norm(i.value)) ? win() : fail()); b.onclick = go; i.onkeydown = e => { if (e.key === "Enter") go(); }; body.append(i, b); setTimeout(() => i.focus(), 50); }
