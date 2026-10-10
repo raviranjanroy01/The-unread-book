@@ -111,11 +111,14 @@ addEventListener("resize", () => { const v = Q("#art svg"); if (v) v.setAttribut
 const curScene = () => ST.scenes[S.scene];
 const curWorld = () => ST.worlds[curScene().world] || Object.values(ST.worlds)[0];
 const say = (t, big) => { if (big) return card(`<p></p><div class="row"><button class="pri x">Close</button></div>`, c => { c.querySelector("p").textContent = T(t); c.querySelector(".x").onclick = closeCard; }); const n = Q("#nar"); n.textContent = T(t); n.style.animation = "none"; void n.offsetWidth; n.style.animation = "fadeup .5s both"; };
+const safeImage = v => /^data:image\/(png|jpeg|gif|webp|svg\+xml);base64,[a-z0-9+/=]+$/i.test(String(v || "")) ? v : "";
+const safeAudio = v => /^data:audio\/[a-z0-9.+-]+;base64,[a-z0-9+/=]+$/i.test(String(v || "")) ? v : "";
 
 function render() {
   const sc = curScene(), w = curWorld(); Q("#wn").textContent = w.name;
   let objs = ""; (sc.objects || []).forEach((o, i) => { if (!ok(o.showIf)) return; const used = S.seen[S.scene + o.id];
-    objs += `<g class="obj ${used ? "used" : ""}" data-i="${i}" tabindex="0" role="button" aria-label="${(o.label || o.kind).replace(/"/g, "")}" transform="translate(${o.x} ${o.y})"><circle r="50" fill="transparent"/><g class="g">${(G[o.kind] || G.star)(o.color)}</g><circle class="halo" r="40"/><circle class="cue" cy="-52" r="3.5"/></g>`; });
+    const pic = safeImage(o.image), art = pic ? `<image class="custom-image" href="${pic}" x="-42" y="-42" width="84" height="84" preserveAspectRatio="xMidYMid meet"/>` : `<g class="g">${(G[o.kind] || G.star)(o.color)}</g>`;
+    objs += `<g class="obj ${used ? "used" : ""}" data-i="${i}" tabindex="0" role="button" aria-label="${(o.label || o.kind).replace(/"/g, "")}" transform="translate(${o.x} ${o.y})"><circle r="50" fill="transparent"/>${art}<circle class="halo" r="40"/><circle class="cue" cy="-52" r="3.5"/></g>`; });
   Q("#art").innerHTML = `<svg viewBox="${vb()}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${w.name}">${art(w, S.scene)}${objs}</svg>`;
   Q("#art").querySelectorAll(".obj").forEach(g => { const go = () => poke(+g.dataset.i, g); g.onclick = go; g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }; });
   const v = (sc.variants || []).find(v => ok(v.if));
@@ -165,6 +168,7 @@ function openPuzzle(id) {
   const fail = () => { msg.textContent = T(p.wrong || "Not quite. Try again.") + (Math.random() < .4 ? "  Kitten says: " + pick(LN.wrong) : ""); c.classList.remove("shake"); void c.offsetWidth; c.classList.add("shake"); kit("hop"); };
   const win = () => { S.solved[id] = 1; grant(p.reward); save(); closeCard(); chime(2); kit("happy"); say(p.win || "Solved."); react("solve", 1); render2(); if (p.go) setTimeout(() => goTo(p.go, {}), 900); };
   const render2 = () => { Q("#nar").textContent = Q("#nar").textContent; renderChoices(); };
+  const uploadedAudio = safeAudio(p.sound); if (uploadedAudio) { const label = el("p", "", "Listen to the clue:"); const player = el("audio"); player.controls = true; player.preload = "metadata"; player.src = uploadedAudio; body.append(label, player); }
   if (p.type === "choice" || p.type === "audiochoice") {
     if (p.type === "audiochoice") { const listen = el("button", "pri", "▶ Play instrumental clue"); listen.onclick = () => playTune(p.audio); body.append(listen); }
     csv(p.options).forEach(o => { const b = el("button", "pick"); b.textContent = o; b.style.margin = "4px"; b.onclick = () => (norm(o) === norm(ans[0]) ? win() : fail()); body.append(b); });
