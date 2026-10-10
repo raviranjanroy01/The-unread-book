@@ -2,22 +2,22 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Unread Book: Editor</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Georgia,serif;background:#fdf1f4;color:#5a3550}
-header{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 14px;background:#2b2a5e;color:#fff6e8;position:sticky;top:0;z-index:5}
-header h1{font-size:1.05rem;margin:0 auto 0 0}
-button,a.b{font:inherit;background:#fff;border:2px solid #f6c6d6;border-radius:10px;padding:6px 12px;cursor:pointer;color:#5a3550;text-decoration:none;font-size:.88rem}
-button.pri{background:#f6c6d6;font-weight:700}button.del{border-color:#e08a9a}
-nav{display:flex;gap:6px;padding:10px 14px;flex-wrap:wrap}nav button.on,.list button.on{background:#f6c6d6;font-weight:700}
-#main{display:grid;grid-template-columns:230px 1fr;gap:14px;padding:0 14px 40px}
-.list{display:flex;flex-direction:column;gap:6px;align-self:start}.list button{text-align:left}
-.form{background:#fff;border:2px solid #f6c6d6;border-radius:16px;padding:14px;min-width:0}
-.f{display:block;margin:8px 0}.f span{display:block;font-size:.82rem;margin-bottom:3px}
-input[type=text],input[type=number],select,textarea{width:100%;font:inherit;padding:7px;border:2px solid #f6c6d6;border-radius:9px;background:#fffafb}
-textarea{min-height:70px}
-fieldset{border:2px dashed #cdb8ee;border-radius:12px;margin:12px 0;padding:8px 12px}legend{font-weight:700;padding:0 6px}
-.sub{background:#fdf1f4;border:1px solid #f6c6d6;border-radius:12px;padding:6px 12px;margin:8px 0}
-.note{font-size:.85rem;opacity:.85}#msg{padding:0 14px;min-height:1.4em;font-weight:700}
-@media(max-width:700px){#main{grid-template-columns:1fr}}
+:root{--night:#2b2a5e;--night-2:#403779;--ink:#563b61;--cream:#fff8ec;--paper:#fffdf8;--blush:#fbe4ea;--rose:#e99fba;--rose-dark:#a85378;--lav:#cbb9ee;--gold:#f4cc7d;--shadow:#332d6040}
+*{box-sizing:border-box}body{min-height:100vh;margin:0;color:var(--ink);font-family:Georgia,"Times New Roman",serif;background:radial-gradient(circle at 10% 0,#fff5df 0 2px,transparent 3px),radial-gradient(circle at 90% 8%,#fff5df 0 1px,transparent 2px),linear-gradient(150deg,#e8d8ef 0,#fdf1f4 45%,#d7c5e6 100%);background-size:120px 120px,90px 90px,auto}
+header{display:flex;flex-wrap:wrap;gap:9px;align-items:center;padding:15px max(18px,calc((100vw - 1180px)/2));background:linear-gradient(115deg,#211f50,#39336e 56%,#5b477b);color:var(--cream);position:sticky;top:0;z-index:5;box-shadow:0 5px 20px #211f5055;border-bottom:2px solid #8375af}
+header h1{font-size:1.18rem;letter-spacing:.01em;margin:0 auto 0 0;padding-right:18px}header h1::before{content:"✦";color:var(--gold);margin-right:8px;font-size:.9em}
+button,a.b{appearance:none;font:inherit;font-size:.88rem;line-height:1.15;background:var(--paper);border:1px solid #dfbad0;border-radius:999px;padding:8px 13px;cursor:pointer;color:var(--ink);text-decoration:none;box-shadow:0 2px 0 #b986a333;transition:transform .16s ease,box-shadow .16s ease,background .16s ease,border-color .16s ease}
+button:hover,a.b:hover{transform:translateY(-1px);background:#fff;box-shadow:0 5px 13px #3427552b;border-color:var(--rose-dark)}button:focus-visible,a.b:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #f3ce7a;outline-offset:2px}
+button.pri{background:linear-gradient(135deg,#f9c8d9,#eaa1bf);border-color:#d67f9f;font-weight:700;color:#502b4b}button.del{color:#8d3f57;border-color:#df8fa5;background:#fff8f8}button.del:hover{background:#ffe8eb}
+#msg{max-width:1180px;margin:12px auto 0;padding:8px 20px;min-height:1.4em;font-weight:700;color:#754663;text-shadow:0 1px #fff}
+nav{display:flex;gap:8px;max-width:1180px;margin:0 auto;padding:7px 18px 14px;flex-wrap:wrap}nav button{background:#fffbf8cc;color:#6b4765}nav button.on,.list button.on{background:linear-gradient(135deg,#7668aa,#51477f);border-color:#51477f;color:#fffaf0;box-shadow:0 4px 11px #4a3f7940;font-weight:700}
+#main{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:260px minmax(0,1fr);gap:20px;padding:0 18px 56px}.list{display:flex;flex-direction:column;gap:7px;align-self:start;max-height:calc(100vh - 155px);overflow:auto;padding:5px}.list button{text-align:left;border-radius:13px;background:#fffaf9d9}.list button:last-child{margin-top:5px;border-style:dashed;color:#754663}
+.form{background:linear-gradient(145deg,#fffefa,#fff7f0);border:1px solid #e5c3d4;border-radius:22px;padding:22px;min-width:0;box-shadow:0 12px 35px var(--shadow),inset 0 1px #fff}.f{display:block;margin:14px 0}.f span{display:block;font-size:.82rem;font-weight:700;letter-spacing:.02em;margin:0 0 5px 3px;color:#70465f}
+input[type=text],input[type=number],select,textarea{width:100%;font:inherit;color:var(--ink);padding:10px 11px;border:1px solid #dcb4ca;border-radius:11px;background:#fffdfc;box-shadow:inset 0 1px 3px #5d35630d;transition:border-color .16s ease,box-shadow .16s ease}input:hover,textarea:hover,select:hover{border-color:#c78eaa}input:focus,textarea:focus,select:focus{border-color:#a86b91;box-shadow:0 0 0 3px #f4c9d83d}textarea{min-height:82px;line-height:1.45;resize:vertical}input[type=checkbox]{accent-color:var(--rose-dark);width:18px;height:18px}
+fieldset{border:1px dashed #ad9ad8;border-radius:16px;margin:19px 0 6px;padding:12px 14px;background:#f8f3ff8c}legend{font-weight:700;color:#56477e;background:#f8f3ff;padding:2px 8px;border-radius:999px}.sub{background:linear-gradient(135deg,#fff9fb,#fffdf9);border:1px solid #edd1dd;border-radius:14px;padding:10px 14px;margin:10px 0;box-shadow:0 3px 8px #4b37620d}.sub b{color:#71445f;display:block;padding:2px 0 3px}
+.note{font-size:.88rem;line-height:1.5;color:#765b71;background:#fff0d6;border-left:4px solid var(--gold);border-radius:7px;padding:9px 11px}#main>.form{min-height:370px}
+@media(max-width:760px){header{padding:12px 14px;gap:7px}header h1{width:100%;padding:0;font-size:1.08rem}header button,header a.b{padding:7px 10px;font-size:.8rem}#msg{padding:7px 15px}nav{padding:7px 14px 12px;gap:6px}nav button{padding:7px 11px}#main{grid-template-columns:1fr;padding:0 14px 35px;gap:12px}.list{display:flex;flex-direction:row;overflow-x:auto;max-height:none;padding:2px}.list button{white-space:nowrap}.list button:last-child{margin:0}.form{padding:16px;border-radius:18px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important}}
 </style></head><body>
 <header><h1>The Unread Book: Editor</h1>
 <button class="pri" id="pub">Publish to the game</button><a class="b" href="index.html" target="_blank">Play</a>
