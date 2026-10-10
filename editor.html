@@ -29,7 +29,8 @@ fieldset{border:1px dashed #ad9ad8;border-radius:16px;margin:19px 0 6px;padding:
 <script>
 const Q=s=>document.querySelector(s),el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.textContent=h;return e};
 const toArr=o=>Object.entries(o||{}).map(([id,v])=>({id,...v})),toDict=a=>Object.fromEntries(a.map(({id,...v})=>[id,v]));
-let ST=JSON.parse(JSON.stringify(loadStory())),A,tab="scenes",sel=0,dirty=false;
+const blankStory=()=>({meta:{title:"My Unread Book",friendName:"Friend",from:"Your name"},start:"opening",kitten:{_:["Mrrp. I am ready for a new story."]},worlds:{garden:{name:"My Story World",kind:"garden",sky:["#2b2a5e","#d79ac0"],tr:"petals"}},clues:{},scenes:{opening:{world:"garden",title:"A New Beginning",text:"Write the first page of your story here.",objects:[],choices:[]}},puzzles:{}});
+let ST=new URLSearchParams(location.search).has("new")?blankStory():JSON.parse(JSON.stringify(loadStory())),A,tab="scenes",sel=0,dirty=new URLSearchParams(location.search).has("new");
 function setup(){A={scenes:toArr(ST.scenes),puzzles:toArr(ST.puzzles),worlds:toArr(ST.worlds).map(w=>({...w,sky1:w.sky[0],sky2:w.sky[1],kitten:(ST.kitten||{})[w.id]||[]}))};}
 setup();
 const KINDS="flower,stone,book,bottle,mushroom,lantern,envelope,star,lily,telescope,mailbox,butterfly,feather,page,panda,cat".split(",");
@@ -84,6 +85,7 @@ function view(){const m=Q("#main");m.innerHTML="";Q("#nav").innerHTML="";
 function build(){const o=JSON.parse(JSON.stringify(ST));o.scenes=toDict(A.scenes);o.puzzles=toDict(A.puzzles);o.worlds={};o.kitten={_:(ST.kitten||{})._||["Mrrp."]};A.worlds.forEach(({id,sky1,sky2,kitten,...w})=>{o.worlds[id]={...w,sky:[sky1,sky2]};if(kitten&&kitten.length)o.kitten[id]=kitten});return o;}
 function check(o){const p=[];Object.entries(o.scenes).forEach(([id,s])=>{if(!o.worlds[s.world])p.push(id+": unknown world");(s.choices||[]).forEach(c=>{if(c.go&&c.go!="@restart"&&!o.scenes[c.go])p.push(id+": a choice leads to a missing scene")});(s.objects||[]).forEach(b=>{if(b.puzzle&&!o.puzzles[b.puzzle])p.push(id+": object opens a missing puzzle");if(b.go&&!o.scenes[b.go])p.push(id+": object goes to a missing scene")})});if(!o.scenes[o.start])p.push("Starting scene is missing");return p;}
 const say=t=>{Q("#msg").textContent=t};
+if(new URLSearchParams(location.search).has("new"))say("Fresh story ready. Fill in the first scene, then press Publish to the game when you are ready.");
 Q("#pub").onclick=()=>{const o=build(),p=check(o);if(p.length){say("Fix first: "+p.slice(0,3).join("; "));return}try{localStorage.setItem("ub_story",JSON.stringify(o));ST=o;setup();dirty=false;say("Published. Open the game to see it.")}catch(e){say("Could not save. Uploaded media may be too large for this browser; remove a file or use smaller files.")}};
 Q("#exp").onclick=()=>{const b=new Blob([JSON.stringify(build(),null,2)],{type:"application/json"}),a=el("a");a.href=URL.createObjectURL(b);a.download="the-unread-book-story.json";a.click();say("Exported.")};
 Q("#imp").onclick=()=>Q("#file").click();
