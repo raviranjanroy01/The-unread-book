@@ -99,6 +99,24 @@ const G = {
   lily: () => E(0, 10, 50, 14, "#7fbf9a") + C(0, 2, 10, "#ffc4da") + C(0, -2, 5, "#ffe6a8"),
   telescope: () => '<g transform="rotate(-30)"><rect x="-10" y="-60" width="22" height="70" rx="6" fill="#d9b46a"/><rect x="-14" y="-66" width="30" height="12" rx="4" fill="#9a6b7e"/></g><path d="M-8 20L-24 50M8 20L24 50M0 20V50" stroke="#9a6b7e" stroke-width="4"/>',
   mailbox: () => '<rect x="-26" y="-20" width="52" height="38" rx="14" fill="#f4a3c0"/><rect x="-3" y="18" width="6" height="34" fill="#9a6b7e"/><rect x="14" y="-34" width="4" height="22" fill="#d9b46a"/><rect x="14" y="-34" width="14" height="9" fill="#d9b46a"/>',
+  key: c => '<circle cx="-18" cy="-12" r="13" fill="none" stroke="'+(c||'#d9b46a')+'" stroke-width="8"/><path d="M-8-3L30 35M14 19l10-10M23 28l10-10" stroke="'+(c||'#d9b46a')+'" stroke-width="8" stroke-linecap="round"/>',
+  crown: c => '<path d="M-32 22L-25-22-7-3 0-30 8-3 27-22 32 22Z" fill="'+(c||'#f4cc7d')+'" stroke="#b88736" stroke-width="3"/><path d="M-34 23h68v12h-68z" fill="#d9b46a"/>',
+  potion: c => '<path d="M-11-36h22M-6-36v19L-25 8q-9 22 25 25 34-3 25-25L6-17v-19" fill="'+(c||'#c9a7ff')+'" stroke="#735a91" stroke-width="4"/><path d="M-20 8q20-12 40 0" stroke="#fff" opacity=".55" fill="none"/>',
+  chest: c => '<rect x="-32" y="-5" width="64" height="38" rx="5" fill="'+(c||'#b87945')+'" stroke="#75442f" stroke-width="4"/><path d="M-33-5q3-34 33-34T33-5" fill="'+(c||'#dcad67')+'" stroke="#75442f" stroke-width="4"/><rect x="-5" y="6" width="10" height="13" rx="2" fill="#f4cc7d"/>',
+  door: c => '<path d="M-27 35V-31q27-12 54 0v66z" fill="'+(c||'#8b669e')+'" stroke="#50385f" stroke-width="4"/><circle cx="13" cy="3" r="4" fill="#f4cc7d"/>',
+  heart: c => '<path d="M0 31C-57-3-27-39 0-14 27-39 57-3 0 31Z" fill="'+(c||'#f08fb0')+'" stroke="#a85378" stroke-width="3"/>',
+  moon: c => '<path d="M15-37q-36 15-13 51 20 30 53 5Q22 56-2 20q-15-30 17-57z" fill="'+(c||'#ffe6a8')+'" stroke="#d9b46a" stroke-width="3"/>',
+  sun: c => '<g stroke="#d9a94e" stroke-width="5" stroke-linecap="round"><path d="M0-45v-12M0 45v12M-45 0h-12M45 0h12M-32-32l-9-9M32 32l9 9M32-32l9-9M-32 32l-9 9"/></g><circle r="27" fill="'+(c||'#fbd46e')+'"/>',
+  cloud: c => '<path d="M-40 23h79q17 0 17-16 0-15-17-16-6-28-32-20-17-18-34 1-23-2-23 19 0 32 10 32z" fill="'+(c||'#e8eaff')+'" stroke="#b8b5dd" stroke-width="3"/>',
+  tree: c => '<rect x="-8" y="2" width="16" height="38" rx="5" fill="#865840"/><circle cx="-20" cy="-8" r="24" fill="'+(c||'#7fbf9a')+'"/><circle cx="8" cy="-23" r="28" fill="'+(c||'#7fbf9a')+'"/><circle cx="25" cy="1" r="21" fill="'+(c||'#7fbf9a')+'"/>',
+  house: c => '<path d="M-37 2L0-34 37 2v36h-74z" fill="'+(c||'#e9a8b5')+'" stroke="#875269" stroke-width="4"/><path d="M-45 3L0-40 45 3" fill="none" stroke="#80596e" stroke-width="8"/><rect x="-8" y="17" width="16" height="21" rx="3" fill="#fff0c7"/>',
+  camera: c => '<rect x="-35" y="-18" width="70" height="49" rx="8" fill="'+(c||'#8294c9')+'" stroke="#4e5686" stroke-width="4"/><path d="M-19-18l8-12h22l8 12" fill="#a7b9e8"/><circle cy="6" r="16" fill="#fff" stroke="#4e5686" stroke-width="5"/>',
+  gift: c => '<rect x="-31" y="-6" width="62" height="42" rx="5" fill="'+(c||'#f08fb0')+'"/><rect x="-35" y="-15" width="70" height="13" rx="4" fill="#ffc6d9"/><path d="M0-15v51M-22-19q-5-22 20 1M22-19q5-22-20 1" fill="none" stroke="#ffe6a8" stroke-width="7"/>',
+  music: c => '<path d="M10-34v49a14 14 0 1 1-8-13V-20l35-9v42a14 14 0 1 1-8-13v-38z" fill="'+(c||'#9b7ac1')+'"/>',
+  map: c => '<path d="M-38-28l25 8 26-9 25 9v50l-25-9-26 9-25-8z" fill="'+(c||'#fff0c7')+'" stroke="#b88765" stroke-width="3"/><path d="M-13-20v49M13-29v50" stroke="#d7a477" stroke-width="2"/>',
+  compass: c => '<circle r="34" fill="'+(c||'#dce8ed')+'" stroke="#76909b" stroke-width="4"/><path d="M4-26l13 35L-4 26-17-9z" fill="#e8788d"/><path d="M-4 26l-13-35L4-26 17 9z" fill="#6a78a7"/>',
+  balloon: c => '<ellipse cy="-15" rx="23" ry="29" fill="'+(c||'#f08fb0')+'"/><path d="M0 14l-4 8 4 5 4-5zM0 27q-10 17 2 32" fill="none" stroke="#a85378" stroke-width="2"/>',
+  cake: c => '<path d="M-30-4h60v36h-60z" fill="'+(c||'#f6c6d6')+'" stroke="#ad6684" stroke-width="3"/><path d="M-32-5q10-14 20 0 10-14 20 0 10-14 22 0" fill="#fff3e4" stroke="#fff3e4" stroke-width="8"/><path d="M0-20v13" stroke="#d9a94e" stroke-width="4"/><path d="M0-28q9 8 0 12-9-4 0-12" fill="#ffd66f"/>',
   butterfly: c => `<g class="bf">${E(-14, -6, 16, 22, c || "#c9a7ff", "transform='rotate(-25 -14 -6)'")}${E(14, -6, 16, 22, c || "#c9a7ff", "transform='rotate(25 14 -6)'")}</g><rect x="-2" y="-18" width="4" height="34" rx="2" fill="#5a3550"/>`,
   feather: () => '<path d="M-10 30Q-20-30 14-34Q18 4-10 30Z" fill="#f8d7e6" stroke="#d9b46a"/><path d="M-10 30L8-26" stroke="#d9b46a"/>',
   page: () => '<rect x="-22" y="-28" width="44" height="56" rx="3" fill="#fff6e8" stroke="#d9b46a" transform="rotate(8)"/><path d="M-12-14h24M-12-6h24M-12 2h16" stroke="#e88fb0" stroke-width="2" transform="rotate(8)"/>',
@@ -117,10 +135,10 @@ const safeAudio = v => /^data:audio\/[a-z0-9.+-]+;base64,[a-z0-9+/=]+$/i.test(St
 function render() {
   const sc = curScene(), w = curWorld(); Q("#wn").textContent = w.name;
   let objs = ""; (sc.objects || []).forEach((o, i) => { if (!ok(o.showIf)) return; const used = S.seen[S.scene + o.id];
-    const pic = safeImage(o.image), art = pic ? `<image class="custom-image" href="${pic}" x="-42" y="-42" width="84" height="84" preserveAspectRatio="xMidYMid meet"/>` : `<g class="g">${(G[o.kind] || G.star)(o.color)}</g>`;
-    objs += `<g class="obj ${used ? "used" : ""}" data-i="${i}" tabindex="0" role="button" aria-label="${(o.label || o.kind).replace(/"/g, "")}" transform="translate(${o.x} ${o.y})"><circle r="50" fill="transparent"/>${art}<circle class="halo" r="40"/><circle class="cue" cy="-52" r="3.5"/></g>`; });
+    const pic = safeImage(o.image), art = pic ? `<image class="custom-image" href="${pic}" x="-42" y="-42" width="84" height="84" preserveAspectRatio="xMidYMid meet"/>` : `<g class="g">${(G[o.kind] || G.star)(o.color)}</g>`, active = o.interactive !== false;
+    objs += `<g class="obj ${used ? "used" : ""}${active ? "" : " decor"}" data-i="${i}"${active ? ' tabindex="0" role="button"' : ""} aria-label="${(o.label || o.kind).replace(/"/g, "")}" transform="translate(${o.x} ${o.y})"><circle r="50" fill="transparent"/>${art}${active ? '<circle class="halo" r="40"/><circle class="cue" cy="-52" r="3.5"/>' : ""}</g>`; });
   Q("#art").innerHTML = `<svg viewBox="${vb()}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${w.name}">${art(w, S.scene)}${objs}</svg>`;
-  Q("#art").querySelectorAll(".obj").forEach(g => { const go = () => poke(+g.dataset.i, g); g.onclick = go; g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }; });
+  Q("#art").querySelectorAll(".obj:not(.decor)").forEach(g => { const go = () => poke(+g.dataset.i, g); g.onclick = go; g.onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } }; });
   const v = (sc.variants || []).find(v => ok(v.if));
   Q("#pt").textContent = T(sc.title); Q("#px").textContent = T(v ? v.text : sc.text); Q("#nar").textContent = ""; Q("#px").style.animation = "none"; void Q("#px").offsetWidth; Q("#px").style.animation = "";
   const ch = Q("#ch"); ch.innerHTML = "";

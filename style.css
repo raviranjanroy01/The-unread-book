@@ -23,6 +23,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .obj{cursor:pointer;outline:none}
 .obj .g{transition:transform .3s,filter .3s;transform-box:fill-box;transform-origin:center}
 .obj:hover .g,.obj:focus-visible .g{filter:drop-shadow(0 0 10px #ffe6a8);transform:scale(1.1)}
+.obj.decor{pointer-events:none}.custom-image{filter:drop-shadow(0 3px 3px #3e275044)}
 .obj .halo,.obj .cue{transform-box:fill-box;transform-origin:center}
 .obj .cue{fill:#ffe6a8;animation:pulse 2.6s infinite}
 .obj .halo{fill:#ffe6a8;opacity:.16;pointer-events:none;animation:halo 3s infinite ease-in-out}
